@@ -36,19 +36,7 @@
           </a>
         </div>
       </li>
-      <li>
-        <a href="#">
-          <i class='bx bx-pie-chart-alt-2' ></i>
-          <span class="link_name">Candidate</span>
-        </a>
-      </li>
-     
-      <li>
-        <a href="#">
-          <i class='bx bx-cog' ></i>
-          <span class="link_name">Personal Setting</span>
-        </a>
-      </li>
+    
       <li>
     <div class="profile-details">
       <div class="profile-content">
@@ -75,6 +63,82 @@
         <img src="./assets/user.png" alt="user">
       </div>
     </div>
+
+    <div class="recruiter-home">
+        <div>
+            <span>Name : </span>
+            <span>Revanth Reddy</span>
+        </div>
+        <div>
+            <span>Age : </span>
+            <span>40</span>
+        </div>
+        <div>
+            <span>Experience : </span>
+            <span>20 years</span>
+        </div>
+    </div>
+
+    <div class="add-candidate-section">
+        <form onsubmit="handleSubmit()" class="candidate-form">
+            <div>
+                <h1>Add Candidate</h1>
+            </div>
+            <div>
+                <span>Name : </span>
+                <input type="text" name="name" id="name" placeholder="Enter Candidate Name.." required> 
+            </div>
+            <div>
+                <span>Phone : </span>
+                <input type="number" name="phone" id="phone">
+            </div>
+            <div>
+                <span>Location : </span>
+                <input type="text" name="location" id="location">
+            </div>
+            <div>
+                <span>Join Interest : </span>
+                <input type="text" name="joinInterest" id="joinInterest">
+            </div>
+            <div>
+                <button type="submit" class="btn">Add Candidate</button>
+            </div>
+        </form>
+    </div>
+    <div class="edit-candidate-section">
+        <h1>Edit Candidates</h1>
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Mobile Number</th>
+                        <th>Location</th>
+                        <th>Job Interest</th>
+                        <th>Status</th>
+                        <th>Joined</th>
+                        <th>Active</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td><input type="text" name="name" id="cname" value="Revanth Reddy"></td>
+                    <td><input type="number" name="number" id="cnumber" value="7575757"></td>
+                    <td><input type="text" name="location" id="clocation" value="nalgonda"></td>
+                    <td><input type="text" name="jobInterest" id="cInterest" value="CM"></td>
+                    <td><input type="text" name="status" id="cstatus" value="Active"></td>
+                    <td><input type="date" name="date" id="cdate" value="22-Mar"></td>
+                    <td><input type="text" name="active" id="cactive" value="yes"></td>
+                    <td><button>Edit</button></td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+
   </section>
   
   <script src="admin.js"></script>
