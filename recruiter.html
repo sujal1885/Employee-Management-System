@@ -15,14 +15,14 @@
     </div>
     <ul class="nav-links">
       <li>
-        <a href="#">
+        <a href="#recruiter-home">
           <i class='bx bx-grid-alt' ></i>
           <span class="link_name">Home</span>
         </a>
       </li>
       <li>
         <div class="iocn-link">
-          <a href="#">
+          <a href="#add-candidate">
             <i class='bx bx-collection' ></i>
             <span class="link_name">Add Candidate</span>
           </a>
@@ -30,7 +30,7 @@
       </li>
       <li>
         <div class="iocn-link">
-          <a href="#">
+          <a href="#edit-candidate">
             <i class='bx bx-book-alt' ></i>
             <span class="link_name">Edit Candidate</span>
           </a>
@@ -64,7 +64,7 @@
       </div>
     </div>
 
-    <div class="recruiter-home">
+    <div id="recruiter-home" class="section">
         <div>
             <span>Name : </span>
             <span>Revanth Reddy</span>
@@ -79,8 +79,8 @@
         </div>
     </div>
 
-    <div class="add-candidate-section">
-        <form onsubmit="handleSubmit()" class="candidate-form">
+    <div id="add-candidate" class="section">
+        <form id="add-candidate-form" class="candidate-form">
             <div>
                 <h1>Add Candidate</h1>
             </div>
@@ -105,7 +105,7 @@
             </div>
         </form>
     </div>
-    <div class="edit-candidate-section">
+    <div id="edit-candidate" class="section edit-candidate-section">
         <h1>Edit Candidates</h1>
         <div>
             <table>
@@ -122,18 +122,8 @@
                         <th>Edit</th>
                     </tr>
                 </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td><input type="text" name="name" id="cname" value="Revanth Reddy"></td>
-                    <td><input type="number" name="number" id="cnumber" value="7575757"></td>
-                    <td><input type="text" name="location" id="clocation" value="nalgonda"></td>
-                    <td><input type="text" name="jobInterest" id="cInterest" value="CM"></td>
-                    <td><input type="text" name="status" id="cstatus" value="Active"></td>
-                    <td><input type="date" name="date" id="cdate" value="22-Mar"></td>
-                    <td><input type="text" name="active" id="cactive" value="yes"></td>
-                    <td><button>Edit</button></td>
-                </tr>
+            <tbody id="candidateTableBody">
+                
             </tbody>
         </table>
         </div>
@@ -143,4 +133,62 @@
   
   <script src="admin.js"></script>
 </body>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const homeLink = document.querySelector('.nav-links a[href="#recruiter-home"]');
+      homeLink.click();
+    });
+
+    const searchParams = new URLSearchParams(window.location.search);
+
+    const thisForm = document.getElementById('add-candidate-form');
+    thisForm.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const formData = new FormData(thisForm).entries()
+        const data = Object.fromEntries(formData);
+        data['recruiterId'] = searchParams.get('recruiterId');
+        const response = await fetch('http://localhost:3000/candidate/add-candidate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+        console.log(result.res._id)
+        window.location.href = `http://127.0.0.1:5500/recruiter.html?recruiterId=${searchParams.get('recruiterId')}#edit-candidate`
+    });
+
+    async function LoadData(){
+        const response = await fetch(`http://localhost:3000/recruiter/recruiter-candidates/${searchParams.get('recruiterId')}`);
+        const candidateData = await response.json();
+
+    console.log('hi',candidateData);
+
+    const candidateTableBody = document.getElementById('candidateTableBody');
+
+    for(let i=0;i<candidateData.candidates.length;i++){
+        console.log('hi',candidateData.candidates[i]);
+        candidateTableBody.innerHTML += `
+                <tr>
+                    <td>${candidateData.candidates[i]._id.slice(candidateData.candidates[i]._id.length-3,candidateData.candidates[i]._id.length)}</td>
+                    <td><input type="text" name="name" id="cname" value=${candidateData.candidates[i].name}></td>
+                    <td><input type="number" name="number" id="cnumber" value=${candidateData.candidates[i].phone}></td>
+                    <td><input type="text" name="location" id="clocation" value=${candidateData.candidates[i].location}></td>
+                    <td><input type="text" name="joinInterest" id="cInterest" value=${candidateData.candidates[i].jobInterest}></td>
+                    <td><input type="text" name="status" id="cstatus" value=${candidateData.candidates[i].status}></td>
+                    <td><input type="date" name="date" id="cdate" value=${candidateData.candidates[i].joined}></td>
+                    <td><input type="text" name="active" id="cactive" value=${candidateData.candidates[i].Active}></td>
+                    <td><button>Edit</button></td>
+                </tr>
+        `
+    }
+    }
+
+    LoadData();
+
+   
+
+</script>
+
 </html>

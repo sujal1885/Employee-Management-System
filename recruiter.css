@@ -292,7 +292,7 @@
     justify-content: space-around;
 }
 
-.recruiter-home{
+/* .recruiter-home{
     display: none;
 }
 
@@ -301,8 +301,16 @@
 }
 
 .edit-candidate-section{
-    /* display: none; */
-}
+    display: none;
+} */
+
+.section {
+    display: none;
+  }
+
+  .section:target {
+    display: block;
+  }
 
 .candidate-form{
     display: flex;
@@ -326,6 +334,7 @@
     border-radius: 1rem;
     color: white;
     font-size: 1rem;
+    cursor: pointer;
 }
 
 .candidate-form input{
